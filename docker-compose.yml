@@ -1,0 +1,33 @@
+services:
+  api:
+    build: .
+    env_file: .env
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports: ["8000:8000"]
+    depends_on: [postgres, redis]
+    volumes:
+      - ./data/iu-xray:/data/iu-xray:ro
+      - ./knowledge_base/approved_documents:/data/knowledge:ro
+    environment:
+      IU_XRAY_DATASET_PATH: /data/iu-xray
+      KNOWLEDGE_DOCUMENT_PATH: /data/knowledge
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: medical_agents
+      POSTGRES_USER: medical
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-CHANGE_ME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations/001_init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:
