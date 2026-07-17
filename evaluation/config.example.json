@@ -1,0 +1,39 @@
+{
+  "split": {
+    "development_percent": 20,
+    "test_percent": 80,
+    "seed": 20260714
+  },
+  "generation": {
+    "methods": [
+      "direct",
+      "no_retrieval_no_audit",
+      "no_retrieval",
+      "no_audit",
+      "full"
+    ],
+    "concurrency": 1
+  },
+  "automatic_metrics": [
+    "bleu",
+    "rouge",
+    "bertscore",
+    "f1chexbert",
+    "radgraph",
+    "radcliq"
+  ],
+  "optional_metrics": ["green"],
+  "bootstrap_iterations": 1000,
+  "paired_test_iterations": 5000,
+  "reader_study": {
+    "sample_size": 200,
+    "raters": ["RATER-1", "RATER-2"],
+    "normal": 80,
+    "abnormal": 80,
+    "multi_abnormal": 40
+  },
+  "auditor_challenge": {
+    "per_error_type": 20,
+    "controls": 100
+  }
+}
