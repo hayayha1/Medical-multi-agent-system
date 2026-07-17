@@ -1,0 +1,9 @@
+services:
+  evaluation:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ["0", "2", "3", "4"]
+              capabilities: [gpu]
