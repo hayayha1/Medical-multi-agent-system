@@ -1,0 +1,2 @@
+"""Medical multi-agent application."""
+
